@@ -27,12 +27,28 @@ while True:
     request = client_connection.recv(1024).decode()
     print(request)
 
-    fin = open('index.html')
-    content = fin.read()
-    fin.close()
+    # parse http headers
+    headers = request.split('\n')
+    filename = headers[0].split()[1]
+
+    print("DEBUG: FILENAME: " + filename)
+
+    # get the content of the file
+    if filename == '/':
+        filename = 'index.html'
+    else:
+        filename = filename.split('/')[1]
+
+    try:
+        fin = open(filename)
+        content = fin.read()
+        fin.close()
+
+        # sent HTTP response
+        response = 'HTTP/1.0 200 OK\n\n' + content
+    except FileNotFoundError:
+        response= 'HTTP/1.0 404 NOT FOUND\n\nFile Not Found'
     
-    # sent HTTP response
-    response = 'HTTP/1.0 200 OK\n\n' + content
     client_connection.sendall(response.encode())
     client_connection.close()
 
