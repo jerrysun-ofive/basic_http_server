@@ -18,6 +18,7 @@ server_socket.bind((SERVER_HOST, SERVER_PORT))
 server_socket.listen(1)
 print("Listening on port %s ..." % SERVER_PORT)
 
+# server listens for any requests from http://localhost:8000/ 
 while True:
     # wait for client connections
     client_connection, client_address = server_socket.accept()
@@ -25,9 +26,13 @@ while True:
     # get the client request
     request = client_connection.recv(1024).decode()
     print(request)
+
+    fin = open('index.html')
+    content = fin.read()
+    fin.close()
     
     # sent HTTP response
-    response = 'HTTP/1.0 200 OK\n\nHello World'
+    response = 'HTTP/1.0 200 OK\n\n' + content
     client_connection.sendall(response.encode())
     client_connection.close()
 
