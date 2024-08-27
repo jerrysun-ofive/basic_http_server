@@ -11,7 +11,7 @@ Using this to learn the fundamentals of http server request and response. The pr
 - Handles HTTP/1.0 GET requests.
 - Serves static files from the server's directory
 - Returns an 'index.html' file when the root URL is accessed.
-- Sends a '404 Not Found' response if the requested file does not exist/
+- Sends a '404 Not Found' response if the requested file does not exist.
 
 ---
 
